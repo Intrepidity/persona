@@ -11,5 +11,14 @@
     ],
     "require": {
         "php": ">=7.2.0"
+    },
+    "autoload": {
+        "Intrepidity\\Persona\\": "src/"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.2"
+    },
+    "autoload-dev": {
+        "Intrepidity\\Persona\\Tests": "tests/"
     }
 }
