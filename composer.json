@@ -1,0 +1,15 @@
+{
+    "name": "intrepidity/persona",
+    "description": "PHP library to generate random but realistic personal data for testing purposes",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bart Guliker",
+            "email": "bart1987@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.0"
+    }
+}
