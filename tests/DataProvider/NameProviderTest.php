@@ -25,8 +25,19 @@ class NameProviderTest extends TestCase
                 ]
             ],
             'lastNames' => [
-                'Tester'
+                'Tester, de'
             ]
+        ]);
+        $loaderMock->getJsonContents(Argument::exact('nl_NL/parameters.json'))->willReturn([
+           'name' => [
+               'lastName' => [
+                   'format' => '/([a-zA-Z]*)(, ([a-zA-Z ]*))?/',
+                   'formatGroupDefinition' => [
+                       'lastName' => 1,
+                       'lastNamePrefixes' => 3
+                   ]
+               ]
+           ]
         ]);
 
         $sut = new NameProvider($loaderMock->reveal());
@@ -35,11 +46,13 @@ class NameProviderTest extends TestCase
         $this->assertInstanceOf(Name::class, $result);
         $this->assertEquals('SomeName', $result->getFirstName());
         $this->assertEquals('Tester', $result->getLastName());
+        $this->assertEquals('de', $result->getLastNamePrefix());
 
         $result = $sut->getRandomNameForLocale('nl_NL', 'f');
         $this->assertInstanceOf(Name::class, $result);
         $this->assertEquals('SomeOtherName', $result->getFirstName());
         $this->assertEquals('Tester', $result->getLastName());
+        $this->assertEquals('de', $result->getLastNamePrefix());
     }
 
     public function testGetRandomNameForLocaleThrowsExceptionWhenDataIsMissing()
@@ -52,7 +65,7 @@ class NameProviderTest extends TestCase
             ],
             'lastNames' => []
         ]);
-        $sut = new NameProvider();
+        $sut = new NameProvider($loaderMock->reveal());
 
         $this->expectException(DataProviderException::class);
         $sut->getRandomNameForLocale('nl_NL', 'm');

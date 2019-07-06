@@ -29,11 +29,12 @@ class EmailProvider implements EmailProviderInterface
     {
         $parameters = $this->fileLoader->getJsonContents("{$locale}/parameters.json");
 
-        return sprintf(
-            '%s.%s@example.%s',
+        return str_replace('..', '.', sprintf(
+            '%s.%s.%s@example.%s',
             strtolower($name->getFirstName()),
+            str_replace(' ', '-', strtolower($name->getLastNamePrefix())),
             str_replace(' ', '-', strtolower($name->getLastName())),
             $parameters['tld']
-        );
+        ));
     }
 }
