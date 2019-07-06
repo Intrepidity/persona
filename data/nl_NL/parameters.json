@@ -1,0 +1,12 @@
+{
+  "tld": "nl",
+  "name": {
+    "lastName": {
+      "format": "/([a-zA-Z]*)(, ([a-zA-Z ]*))?/",
+      "formatGroupDefinition": {
+        "lastName": 1,
+        "lastNamePrefixes": 3
+      }
+    }
+  }
+}
