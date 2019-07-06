@@ -7,6 +7,9 @@ use Intrepidity\Persona\Entity\Person;
 
 class GenderProvider implements GenderProviderInterface
 {
+    /**
+     * @return string
+     */
     public function getRandomGender(): string
     {
         $genders = [

@@ -13,14 +13,10 @@ class NameProvider implements NameProviderInterface
     /** @var string */
     const PATH_TO_NAME_DATA = '{locale}/names.json';
 
-    /**
-     * @var FileLoaderInterface
-     */
+    /** @var FileLoaderInterface */
     private $fileLoader;
 
-    /**
-     * @param FileLoaderInterface|null $fileLoader
-     */
+    /** @param FileLoaderInterface|null $fileLoader */
     public function __construct(?FileLoaderInterface $fileLoader = null)
     {
         $this->fileLoader = $fileLoader ?: new FileLoader();
