@@ -5,6 +5,15 @@ namespace Intrepidity\Persona\Entity;
 
 class Person
 {
+    /** @var string */
+    public const GENDER_MALE = 'm';
+
+    /** @var string */
+    public const GENDER_FEMALE = 'f';
+
+    /** @var string */
+    private $gender;
+
     /** @var Name */
     private $name;
 
@@ -18,17 +27,32 @@ class Person
     private $address;
 
     /**
+     * @param string $gender
      * @param Name $name
      * @param string $emailAddress
      * @param string $phoneNumber
      * @param Address|null $address
      */
-    public function __construct(Name $name, ?string $emailAddress, ?string $phoneNumber, ?Address $address)
-    {
+    public function __construct(
+        string $gender,
+        Name $name,
+        ?string $emailAddress = null,
+        ?string $phoneNumber = null,
+        ?Address $address = null
+    ) {
+        $this->gender = $gender;
         $this->name = $name;
         $this->emailAddress = $emailAddress;
         $this->phoneNumber = $phoneNumber;
         $this->address = $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGender(): string
+    {
+        return $this->gender;
     }
 
     /**
