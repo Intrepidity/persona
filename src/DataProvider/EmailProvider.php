@@ -9,7 +9,7 @@ use Intrepidity\Persona\Loader\FileLoaderInterface;
 
 class EmailProvider implements EmailProviderInterface
 {
-    /** @var FileLoaderInterface|null */
+    /** @var FileLoaderInterface */
     private $fileLoader;
 
     /**
