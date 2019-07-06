@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Intrepidity\Persona\Entity;
 
+use DateTime;
+
 class Person
 {
     /** @var string */
@@ -16,6 +18,9 @@ class Person
 
     /** @var Name */
     private $name;
+
+    /** @var DateTime */
+    private $dateOfBirth;
 
     /** @var string|null */
     private $emailAddress;
@@ -36,12 +41,14 @@ class Person
     public function __construct(
         string $gender,
         Name $name,
+        DateTime $dateOfBirth,
         ?string $emailAddress = null,
         ?string $phoneNumber = null,
         ?Address $address = null
     ) {
         $this->gender = $gender;
         $this->name = $name;
+        $this->dateOfBirth = $dateOfBirth;
         $this->emailAddress = $emailAddress;
         $this->phoneNumber = $phoneNumber;
         $this->address = $address;
@@ -73,6 +80,14 @@ class Person
         $person->name = $name;
 
         return  $person;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getDateOfBirth(): DateTime
+    {
+        return $this->dateOfBirth;
     }
 
     /**

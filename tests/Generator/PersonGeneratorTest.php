@@ -3,14 +3,15 @@ declare(strict_types=1);
 
 namespace Intrepidity\Persona\Tests\Generator;
 
+use Intrepidity\Persona\DataProvider\DateOfBirthProviderInterface;
 use Intrepidity\Persona\DataProvider\GenderProviderInterface;
 use Intrepidity\Persona\DataProvider\NameProviderInterface;
 use Intrepidity\Persona\Entity\Name;
-use Intrepidity\Persona\Entity\Person;
 use Intrepidity\Persona\Exception\DataProviderException;
 use Intrepidity\Persona\Generator\PersonGenerator;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use DateTime;
 
 class PersonGeneratorTest extends TestCase
 {
@@ -24,15 +25,22 @@ class PersonGeneratorTest extends TestCase
             new Name('T', 'Test', 'Tester')
         );
 
+        $dateOfBirthProviderMock = $this->prophesize(DateOfBirthProviderInterface::class);
+        $dateOfBirthProviderMock->getRandomDateOfBirth()->willReturn(
+            new DateTime("03-02-1991")
+        );
+
         $sut = new PersonGenerator(
             $genderProviderMock->reveal(),
-            $nameProviderMock->reveal()
+            $nameProviderMock->reveal(),
+            $dateOfBirthProviderMock->reveal()
         );
 
         $result = $sut->generate('nl_NL');
         $this->assertEquals('f', $result->getGender());
         $this->assertEquals('Test', $result->getName()->getFirstName());
         $this->assertEquals('Tester', $result->getName()->getLastName());
+        $this->assertEquals("03-02-1991", $result->getDateOfBirth()->format('d-m-Y'));
     }
 
     public function testGenerateHandlesDataProviderException()

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Intrepidity\Persona\Generator;
 
+use Intrepidity\Persona\DataProvider\DateOfBirthProvider;
+use Intrepidity\Persona\DataProvider\DateOfBirthProviderInterface;
 use Intrepidity\Persona\DataProvider\GenderProvider;
 use Intrepidity\Persona\DataProvider\GenderProviderInterface;
 use Intrepidity\Persona\DataProvider\NameProvider;
@@ -13,26 +15,28 @@ use RuntimeException;
 
 class PersonGenerator implements PersonGeneratorInterface
 {
-    /**
-     * @var GenderProviderInterface
-     */
+    /** @var GenderProviderInterface */
     private $genderProvider;
 
-    /**
-     * @var NameProviderInterface
-     */
+    /** @var NameProviderInterface */
     private $nameProvider;
+
+    /** @var DateOfBirthProviderInterface */
+    private $dateOfBirthProvider;
 
     /**
      * @param GenderProviderInterface|null $genderProvider
      * @param NameProviderInterface|null $nameProvider
+     * @param DateOfBirthProviderInterface|null $dateOfBirthProvider
      */
     public function __construct(
         ?GenderProviderInterface $genderProvider = null,
-        ?NameProviderInterface $nameProvider = null
+        ?NameProviderInterface $nameProvider = null,
+        ?DateOfBirthProviderInterface $dateOfBirthProvider = null
     ) {
         $this->genderProvider = $genderProvider ?: new GenderProvider();
         $this->nameProvider = $nameProvider ?: new NameProvider();
+        $this->dateOfBirthProvider = $dateOfBirthProvider ?: new DateOfBirthProvider();
     }
 
     /**
@@ -49,7 +53,8 @@ class PersonGenerator implements PersonGeneratorInterface
 
             return new Person(
                 $gender,
-                $name
+                $name,
+                $this->dateOfBirthProvider->getRandomDateOfBirth()
             );
         } catch (DataProviderException $exception) {
             throw new RuntimeException("Failed to generate person", 0, $exception);
